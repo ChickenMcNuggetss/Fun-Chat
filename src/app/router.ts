@@ -6,20 +6,20 @@ export interface Route {
 }
 
 export const enum RoutesApp {
-  Garage = 'garage',
-  Winners = 'winners',
+  LogIn = 'login',
+  Info = 'info',
 }
 
 const routesList: Array<Route> = [
+  {
+    name: RoutesApp.LogIn,
+    component: async () => {
+      const { LogIn } = await import('./pages/logIn/logIn');
+      return new LogIn();
+    },
+  },
   // {
-  //   name: RoutesApp.Garage,
-  //   component: async () => {
-  //     const { Garage } = await import('./pages/garage/garage');
-  //     return new Garage();
-  //   },
-  // },
-  // {
-  //   name: RoutesApp.Winners,
+  //   name: RoutesApp.Info,
   //   component: async () => {
   //     const { Winners } = await import('./pages/winners/winners');
   //     return new Winners();
@@ -42,7 +42,7 @@ export class Router {
     if (route) {
       this.loadSelectedHash(route);
     } else if (this.defaultComponent) {
-      this.loadSelectedHash({ name: RoutesApp.Garage, component: this.defaultComponent });
+      this.loadSelectedHash({ name: RoutesApp.LogIn, component: this.defaultComponent });
     }
   }
 }
@@ -59,10 +59,10 @@ export function createRouter(wrapper: HTMLElement) {
           wrapper.appendChild(component.getNode());
         });
       }
+    },
+    async () => {
+      const { LogIn } = await import('./pages/logIn/logIn');
+      return new LogIn();
     }
-    // async () => {
-    // const { Garage } = await import('./pages/garage/garage');
-    // return new Garage();
-    // }
   );
 }
