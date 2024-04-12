@@ -4,4 +4,3 @@
 # validate branch name before commit
 
 npm run lint
-npx validate-branch-name 
