@@ -1,0 +1,21 @@
+body {
+  font-family: "Inter", sans-serif;
+  background-color: #adb6c5;
+}
+
+.button {
+  font-family: "Inter", sans-serif;
+  padding: 3px;
+  margin-right: 7px;
+  background-color: transparent;
+  border: 1px solid black;
+  border-radius: 10px;
+}
+
+@media (hover: hover) {
+  .button:hover:not(:disabled) {
+    cursor: pointer;
+    background-color: #8ea1c0;
+    transition: 0.5s;
+  }
+}
