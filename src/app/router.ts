@@ -7,7 +7,8 @@ export interface Route {
 
 export const enum RoutesApp {
   LogIn = 'login',
-  Info = 'info',
+  About = 'about',
+  Chat = 'chat',
 }
 
 const routesList: Array<Route> = [
@@ -18,13 +19,20 @@ const routesList: Array<Route> = [
       return new LogIn();
     },
   },
-  // {
-  //   name: RoutesApp.Info,
-  //   component: async () => {
-  //     const { Winners } = await import('./pages/winners/winners');
-  //     return new Winners();
-  //   },
-  // },
+  {
+    name: RoutesApp.About,
+    component: async () => {
+      const { About } = await import('./pages/about/about');
+      return new About();
+    },
+  },
+  {
+    name: RoutesApp.Chat,
+    component: async () => {
+      const { Chat } = await import('./pages/chat/chat');
+      return new Chat();
+    },
+  },
 ];
 
 export class Router {

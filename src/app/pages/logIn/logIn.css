@@ -1,39 +1,11 @@
-.wrapper {
-  margin: 10rem auto;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.log-in__form-box {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
-  width: 20rem;
-  padding: 10px;
-  border: 2px solid rgb(29, 36, 28);
-  border-radius: 20px;
-}
-
 .log-in__button {
-  background-color: rgba(240, 248, 255, 0);
-  border: 2px solid rgb(29, 36, 28);
   border-radius: 10px;
   padding: 7px;
-  cursor: pointer;
-}
-
-.log-in__button:not(:disabled):hover {
-  color: rgb(78, 110, 137);
-  border-color: rgb(78, 110, 137);
-  cursor: pointer;
 }
 
 .log-in_input {
-  border: 1px solid rgb(29, 36, 28);
-  border-radius: 7px;
+  border: none;
+  border-bottom: 1px solid rgb(29, 36, 28);
   padding: 2px;
   background-color: rgba(240, 248, 255, 0);
 }

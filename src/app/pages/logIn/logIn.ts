@@ -1,31 +1,36 @@
 import { Component } from '../../components/base-component';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
-// import { setNavigation } from '../../utilities/navigate';
+import { setNavigation } from '../../utilities/navigate';
 import './logIn.css';
 
 export class LogIn extends Component {
-  private inputFirstName = new Input({
+  private inputName = new Input({
     className: 'log-in_input',
-    id: 'first-name',
+    id: 'Name',
     required: true,
     type: 'text',
     minLength: 3,
     pattern: '^[A-Z][a-zA-Z\\-]{2,}$',
   });
 
-  private inputSurname = new Input({
+  private inputPassword = new Input({
     className: 'log-in_input',
-    id: 'surname',
+    id: 'Password',
     required: true,
     minLength: 4,
     pattern: '^[A-Z][a-zA-Z\\-]{3,}$',
   });
 
   private buttonLogIn = new Button({
-    className: 'log-in__button',
+    className: 'log-in__button button',
     text: 'Log In',
     disabled: true,
+  });
+
+  private buttonAbout = new Button({
+    className: 'log-in__button button',
+    text: 'About',
   });
 
   private title = new Component({
@@ -34,69 +39,71 @@ export class LogIn extends Component {
     text: 'Log In',
   });
 
-  private labelSurname: Component<HTMLElement>;
+  private labelPassword: Component<HTMLElement>;
 
-  private labelFirstName: Component<HTMLElement>;
+  private labelName: Component<HTMLElement>;
 
   constructor() {
     super({ tag: 'div', className: 'wrapper' });
-    this.labelFirstName = this.makeFirstNameLabel();
-    this.labelSurname = this.makeSurnameLabel();
+    this.labelName = this.makeFirstNameLabel();
+    this.labelPassword = this.makeSurnameLabel();
+    this.buttonAbout.addListener('click', () => setNavigation('about'));
     this.append(this.makeForm());
   }
 
   private makeForm() {
     const formBox = new Component({
       tag: 'form',
-      className: 'log-in__form-box',
+      className: 'log-in__form-box box',
     });
-    this.inputFirstName.addListener('input', () => {
-      this.handleButtonState(this.inputFirstName.setValidity(), this.inputSurname.checkValidity());
+    this.inputName.addListener('input', () => {
+      this.handleButtonState(this.inputName.setValidity(), this.inputPassword.checkValidity());
     });
-    this.inputSurname.addListener('input', () => {
-      this.handleButtonState(this.inputFirstName.checkValidity(), this.inputSurname.setValidity());
+    this.inputPassword.addListener('input', () => {
+      this.handleButtonState(this.inputName.checkValidity(), this.inputPassword.setValidity());
     });
     this.buttonLogIn.addListener('click', (e) => {
       e.preventDefault();
-      localStorage.setItem('FirstName', `${this.inputFirstName.getNode().value}`);
-      localStorage.setItem('Surname', `${this.inputSurname.getNode().value}`);
-      // setNavigation('');
+      localStorage.setItem('Name', `${this.inputName.getNode().value}`);
+      localStorage.setItem('Password', `${this.inputPassword.getNode().value}`);
+      setNavigation('chat');
     });
     formBox.appendChildren([
       this.title,
-      this.labelFirstName,
-      this.inputFirstName,
-      this.labelSurname,
-      this.inputSurname,
+      this.labelName,
+      this.inputName,
+      this.labelPassword,
+      this.inputPassword,
       this.buttonLogIn,
+      this.buttonAbout,
     ]);
 
     return formBox;
   }
 
   private makeFirstNameLabel() {
-    this.labelFirstName = new Component({
+    this.labelName = new Component({
       tag: 'label',
       className: 'log-in__label',
-      text: 'First Name:',
+      text: 'Name:',
     });
-    this.labelFirstName.setAttribute('for', 'first-name');
+    this.labelName.setAttribute('for', 'Name');
 
-    return this.labelFirstName;
+    return this.labelName;
   }
 
   private makeSurnameLabel() {
-    this.labelSurname = new Component({
+    this.labelPassword = new Component({
       tag: 'label',
       className: 'log-in__label',
-      text: 'Surname:',
+      text: 'Password:',
     });
-    this.labelSurname.setAttribute('for', 'surname');
+    this.labelPassword.setAttribute('for', 'Password');
 
-    return this.labelSurname;
+    return this.labelPassword;
   }
 
-  private handleButtonState(isFirstNameValid: boolean, isSurnameValid: boolean) {
-    this.buttonLogIn.setDisabledState(isFirstNameValid === false || isSurnameValid === false);
+  private handleButtonState(isNameValid: boolean, isPasswordValid: boolean) {
+    this.buttonLogIn.setDisabledState(isNameValid === false || isPasswordValid === false);
   }
 }

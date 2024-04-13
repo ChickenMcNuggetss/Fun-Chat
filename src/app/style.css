@@ -1,6 +1,7 @@
 body {
   font-family: 'Inter', sans-serif;
   background-color: #adb6c5;
+  color: #2f3642;
 }
 
 .button {
@@ -8,14 +9,48 @@ body {
   padding: 3px;
   margin-right: 7px;
   background-color: transparent;
-  border: 1px solid black;
+  border: 1px solid #2f3642;
+  color: #2f3642;
   border-radius: 10px;
+  transition: 0.4s;
+}
+
+input:-webkit-autofill {
+  color: #adb6c5 !important;
+}
+
+.button:disabled {
+  border: 1px solid #7d90b0;
+  color: #7d90b0;
+}
+
+.wrapper {
+  margin: 5rem auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 2rem 8rem;
+  border: 1px solid #2f3642;
+  border-radius: 20px;
+}
+
+input:focus {
+  outline: none;
 }
 
 @media (hover: hover) {
-  .button:hover:not(:disabled) {
+  .button:not(:disabled):hover {
+    color: rgb(78, 110, 137);
+    border-color: rgb(78, 110, 137);
+    transition: 0.4s;
     cursor: pointer;
-    background-color: #8ea1c0;
-    transition: 0.5s;
   }
 }
