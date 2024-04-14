@@ -1,5 +1,7 @@
 import { Component } from '../../../components/base-component';
 import { Button } from '../../../components/button';
+import { socketService } from '../../../services/websocket-service';
+import { setNavigation } from '../../../utilities/navigate';
 import './header.css';
 
 export class Header extends Component {
@@ -11,6 +13,12 @@ export class Header extends Component {
 
   constructor() {
     super({ tag: 'header', className: 'header container' });
+    this.logOut.addListener('click', () => {
+      const login = JSON.parse(JSON.stringify(sessionStorage.getItem('Name')));
+      const password = JSON.parse(JSON.stringify(sessionStorage.getItem('Password')));
+      socketService.sendLogoutRequest(login, password);
+      setNavigation('login');
+    });
     this.appendChildren([this.userName, this.title, this.logOut]);
   }
 }

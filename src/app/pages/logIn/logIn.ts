@@ -2,6 +2,7 @@ import { Component } from '../../components/base-component';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { setNavigation } from '../../utilities/navigate';
+import { socketService } from '../../services/websocket-service';
 import './logIn.css';
 
 export class LogIn extends Component {
@@ -18,6 +19,7 @@ export class LogIn extends Component {
     className: 'log-in_input',
     id: 'Password',
     required: true,
+    type: 'password',
     minLength: 4,
     pattern: '^[A-Z][a-zA-Z\\-]{3,}$',
   });
@@ -64,9 +66,13 @@ export class LogIn extends Component {
     });
     this.buttonLogIn.addListener('click', (e) => {
       e.preventDefault();
-      localStorage.setItem('Name', `${this.inputName.getNode().value}`);
-      localStorage.setItem('Password', `${this.inputPassword.getNode().value}`);
+      sessionStorage.setItem('Name', `${this.inputName.getNode().value}`);
+      sessionStorage.setItem('Password', `${this.inputPassword.getNode().value}`);
       setNavigation('chat');
+      socketService.authenticateUser(
+        this.inputName.getNode().value,
+        this.inputPassword.getNode().value
+      );
     });
     formBox.appendChildren([
       this.title,
