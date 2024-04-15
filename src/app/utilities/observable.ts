@@ -1,7 +1,7 @@
 function isCallable(fn: unknown): fn is CallableFunction {
   return typeof fn === 'function';
 }
-class Observable<ListenerType> {
+export class Observable<ListenerType> {
   private value: ListenerType;
 
   private listeners: Array<(params: ListenerType) => void>;
