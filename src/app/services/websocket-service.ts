@@ -1,8 +1,5 @@
-interface IRequest {
-  id: string | null;
-  type: string;
-  payload: object;
-}
+/* eslint-disable no-console */
+import { IRequest } from '../interfaces/socket-interface';
 
 const URL = 'ws://127.0.0.1:4000/';
 
