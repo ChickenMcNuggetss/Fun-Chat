@@ -1,7 +1,12 @@
 /* eslint-disable no-console */
-import { IRequest } from '../interfaces/socket-interface';
+import { WsMessage } from '../enums/ws-message';
+import { IUser } from '../interfaces/socket-request';
 
 const URL = 'ws://127.0.0.1:4000/';
+
+function serializeData<T>(type: WsMessage, payload: T) {
+  return JSON.stringify({ id: '', type, payload });
+}
 
 export class SocketService {
   private socket: WebSocket;
@@ -26,33 +31,34 @@ export class SocketService {
     });
   }
 
-  authenticateUser(login: string, password: string) {
-    const data: IRequest = {
-      id: null,
-      type: 'USER_LOGIN',
-      payload: {
-        user: {
-          login,
-          password,
-        },
+  public authenticateUser(login: string, password: string) {
+    const data = serializeData<IUser>(WsMessage.USER_LOGOUT, {
+      user: {
+        login,
+        password,
       },
-    };
-    this.socket.send(JSON.stringify(data));
-    console.log(data);
+    });
+    this.socket.send(data);
   }
 
-  sendLogoutRequest(login: string, password: string) {
-    const data: IRequest = {
-      id: null,
-      type: 'USER_LOGOUT',
-      payload: {
-        user: {
-          login,
-          password,
-        },
+  public sendLogoutRequest(login: string, password: string) {
+    const data = serializeData<IUser>(WsMessage.USER_LOGOUT, {
+      user: {
+        login,
+        password,
       },
-    };
-    this.socket.send(JSON.stringify(data));
+    });
+    this.socket.send(data);
+  }
+
+  public getAllAuthUsers() {
+    const data = serializeData<null>(WsMessage.USER_ACTIVE, null);
+    this.socket.send(data);
+  }
+
+  public getAllUnauthUsers() {
+    const data = serializeData<null>(WsMessage.USER_INACTIVE, null);
+    this.socket.send(data);
   }
 }
 
