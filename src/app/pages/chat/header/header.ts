@@ -4,8 +4,13 @@ import { socketService } from '../../../services/websocket-service';
 import { setNavigation } from '../../../utilities/navigate';
 import './header.css';
 
+const USER_NAME = sessionStorage.getItem('Name');
+
 export class Header extends Component {
-  private userName = new Component({ className: 'header__userName' });
+  private userName = new Component({
+    className: 'header__userName',
+    text: JSON.stringify(USER_NAME),
+  });
 
   private title = new Component({ tag: 'h1', className: 'header__title', text: 'Fun Chat' });
 

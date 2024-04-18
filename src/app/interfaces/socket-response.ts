@@ -1,8 +1,8 @@
-export interface IRequest {
-  id: string | null;
-  type: string;
-  payload: object | null;
-}
+// export interface IRequest {
+//   id: string | null;
+//   type: string;
+//   payload: object | null;
+// }
 
 export interface IUserPayloadResp {
   user: {
@@ -29,3 +29,5 @@ export interface IRespMessage {
     };
   };
 }
+
+export type Responses = IUserPayloadResp | IAllAuthUsers | IRespMessage;

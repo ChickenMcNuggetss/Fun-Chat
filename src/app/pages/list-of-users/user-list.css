@@ -1,0 +1,6 @@
+.users-list__wrapper {
+  display: flex;
+  overflow: scroll;
+  background-color: #e2ecffb8;
+  border-radius: 15px;
+}

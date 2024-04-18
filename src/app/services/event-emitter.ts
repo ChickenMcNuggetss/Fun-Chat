@@ -25,3 +25,5 @@ export class EventEmitter<K> {
     if (index !== -1) listenerList.slice(index, index + 1);
   }
 }
+
+export const authEmitter = new EventEmitter();
