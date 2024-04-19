@@ -2,8 +2,8 @@ import { Component } from '../../components/base-component';
 import { Input } from '../../components/input';
 import { Button } from '../../components/button';
 import { setNavigation } from '../../utilities/navigate';
-import { socketService } from '../../services/websocket-service';
 import './logIn.css';
+import { userService } from '../../services/user-service';
 
 export class LogIn extends Component {
   private inputName = new Input({
@@ -66,10 +66,8 @@ export class LogIn extends Component {
     });
     this.buttonLogIn.addListener('click', (e) => {
       e.preventDefault();
-      sessionStorage.setItem('Name', `${this.inputName.getNode().value}`);
-      sessionStorage.setItem('Password', `${this.inputPassword.getNode().value}`);
       setNavigation('chat');
-      socketService.authenticateUser(
+      userService.authenticateUser(
         this.inputName.getNode().value,
         this.inputPassword.getNode().value
       );

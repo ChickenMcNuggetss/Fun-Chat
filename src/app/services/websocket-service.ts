@@ -28,6 +28,7 @@ export class SocketService extends EventEmitter<Responses> {
 
     this.socket.addEventListener('message', (event: MessageEvent<string>) => {
       const data = JSON.parse(event.data);
+      console.log(data.type);
       this.emitEvent(data.type, data.payload);
     });
 
@@ -35,9 +36,9 @@ export class SocketService extends EventEmitter<Responses> {
       console.log(event, event.type);
     });
 
-    this.socket.addEventListener('close', (event: Event) => {
-      console.log(event);
-    });
+    // this.socket.addEventListener('close', (event: Event) => {
+    //   console.log(event);
+    // });
   }
 
   public authenticateUser(login: string, password: string) {
@@ -72,7 +73,9 @@ export class SocketService extends EventEmitter<Responses> {
 
   public getAllUnauthUsers() {
     const data = serializeData<null>(WsMessage.USER_INACTIVE, null);
-    this.socket.send(data);
+    if (this.socket.readyState === 1) {
+      this.socket.send(data);
+    }
   }
 }
 

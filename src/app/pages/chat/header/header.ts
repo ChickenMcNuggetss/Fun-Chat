@@ -22,6 +22,7 @@ export class Header extends Component {
       const login = JSON.parse(JSON.stringify(sessionStorage.getItem('Name')));
       const password = JSON.parse(JSON.stringify(sessionStorage.getItem('Password')));
       socketService.sendLogoutRequest(login, password);
+      sessionStorage.clear();
       setNavigation('login');
     });
     this.appendChildren([this.userName, this.title, this.logOut]);

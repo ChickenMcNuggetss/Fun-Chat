@@ -11,7 +11,7 @@ export interface IUserPayloadResp {
   };
 }
 
-export interface IAllAuthUsers {
+export interface IAllUsers {
   users: [];
 }
 
@@ -30,4 +30,4 @@ export interface IRespMessage {
   };
 }
 
-export type Responses = IUserPayloadResp | IAllAuthUsers | IRespMessage;
+export type Responses = IUserPayloadResp | IAllUsers | IRespMessage;
