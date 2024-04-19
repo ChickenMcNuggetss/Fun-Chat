@@ -1,6 +1,7 @@
 import { socketService } from './websocket-service';
 
 class UserService {
+  // eslint-disable-next-line class-methods-use-this
   authenticateUser(name: string, password: string) {
     sessionStorage.setItem('Name', `${name}`);
     sessionStorage.setItem('Password', `${password}`);
