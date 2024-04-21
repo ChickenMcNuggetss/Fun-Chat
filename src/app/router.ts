@@ -1,4 +1,5 @@
 import { Component } from './components/base-component';
+import { userService } from './services/user-service';
 
 export interface Route {
   name: string;
@@ -48,7 +49,9 @@ export class Router {
   initHash() {
     const route = this.routes.find((unit) => unit.name === window.location.hash.slice(1));
     if (route) {
-      this.loadSelectedHash(route);
+      if (route.name !== 'chat' || userService.getUserStatus().getValue() === 'true') {
+        this.loadSelectedHash(route);
+      }
     } else if (this.defaultComponent) {
       this.loadSelectedHash({ name: RoutesApp.LogIn, component: this.defaultComponent });
     }

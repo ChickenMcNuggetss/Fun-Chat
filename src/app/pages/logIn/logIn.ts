@@ -21,7 +21,7 @@ export class LogIn extends Component {
     required: true,
     type: 'password',
     minLength: 4,
-    pattern: '^[A-Z][a-zA-Z\\-]{3,}$',
+    pattern: '[a-zA-Z0-9\\-]{3,}$',
   });
 
   private buttonLogIn = new Button({
@@ -67,6 +67,7 @@ export class LogIn extends Component {
     this.buttonLogIn.addListener('click', (e) => {
       e.preventDefault();
       setNavigation('chat');
+      userService.getUserStatus().notify('true');
       userService.authenticateUser(
         this.inputName.getNode().value,
         this.inputPassword.getNode().value

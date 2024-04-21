@@ -6,6 +6,8 @@ import { socketService } from './websocket-service';
 class UserService {
   private usersList = new Observable<IUser[]>([]);
 
+  private isLogined = new Observable<string>('false');
+
   constructor() {
     socketService.subscribeListener(WsMessage.USER_ACTIVE, this.loadUsers);
     socketService.subscribeListener(WsMessage.USER_INACTIVE, this.loadUsers);
@@ -56,6 +58,16 @@ class UserService {
 
   public getUsersList() {
     return this.usersList;
+  }
+
+  getUserStatus() {
+    return this.isLogined;
+  }
+
+  userFilter(name: string) {
+    return this.usersList.getValue().filter((user) => {
+      return user.login === name;
+    });
   }
 }
 

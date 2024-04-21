@@ -35,14 +35,19 @@ export class UsersList extends Component {
       el.removeNode();
     });
     const currentComps: UserCard[] = [];
+    const name = sessionStorage.getItem('Name');
+    console.log(JSON.parse(JSON.stringify(name)));
     array.forEach((user: IUser) => {
-      if (sessionStorage.getItem('Name') !== user.login) {
-        const card = new UserCard();
-        const status = setStatusFunc(user.isLogined);
-        card.setStatus(status);
-        card.setName(user.login);
-        currentComps.push(card);
-        this.usersList.append(card);
+      if (name) {
+        if (name !== user.login) {
+          console.log(user);
+          const card = new UserCard();
+          const status = setStatusFunc(user.isLogined);
+          card.setStatus(status);
+          card.setName(user.login);
+          currentComps.push(card);
+          this.usersList.append(card);
+        }
       }
     });
     this.prevComponent = currentComps;
