@@ -1,13 +1,9 @@
 import { Component } from '../../components/base-component';
-import { WsMessage } from '../../enums/ws-message';
-import { IAllUsers, IUserPayloadResp, Responses } from '../../interfaces/socket-response';
-import { socketService } from '../../services/websocket-service';
+import { Input } from '../../components/input';
+import { IUser } from '../../interfaces/socket-response';
+import { userService } from '../../services/user-service';
 import { UserCard } from './user-card/user-card';
-
-interface IUser {
-  login: string;
-  isLogined: boolean;
-}
+import './users-list.css';
 
 function setStatusFunc(status: boolean) {
   if (status) return 'Active';
@@ -17,42 +13,38 @@ function setStatusFunc(status: boolean) {
 export class UsersList extends Component {
   private usersList: Component;
 
+  private prevComponent: UserCard[] | null = null;
+
+  private search = new Input({ className: 'users-list__search' });
+
   constructor() {
     super({ tag: 'div', className: 'users-list__wrapper' });
     const usersList = new Component({ tag: 'div', className: 'users-list' });
     this.usersList = usersList;
-    this.append(this.usersList);
-    socketService.subscribeListener(WsMessage.USER_ACTIVE, this.loadUsers);
-    socketService.subscribeListener(WsMessage.USER_INACTIVE, this.loadUsers);
-    socketService.subscribeListener(WsMessage.USER_EXTERNAL_LOGIN, this.loadExternalUsers);
-    socketService.subscribeListener(WsMessage.USER_EXTERNAL_LOGOUT, this.loadExternalUsers);
-    socketService.getAllAuthUsers();
-    socketService.getAllUnauthUsers();
+    const inputContainer = new Component({ className: 'users-list__input-container' });
+    inputContainer.append(this.search);
+    this.appendChildren([inputContainer, this.usersList]);
+    const userListObservable = userService.getUsersList();
+    userListObservable.subscribe((users) => {
+      this.addUsers(users);
+    });
   }
 
-  loadUsers = (data: Responses) => {
-    const response = data as IAllUsers;
-    // if (response.users.length === 0) {
-    //   const element = new Component({ className: 'warning', text: 'There is no one here yet' });
-    //   this.append(element);
-    // } else {}
-    console.log(response.users);
-    response.users.forEach((user: IUser) => {
-      const card = new UserCard();
-      const status = setStatusFunc(user.isLogined);
-      card.setStatus(status);
-      card.setName(user.login);
-      this.usersList.append(card);
+  addUsers(array: IUser[]) {
+    this.prevComponent?.forEach((el) => {
+      el.removeNode();
     });
-  };
-
-  loadExternalUsers = (data: Responses) => {
-    const response = data as IUserPayloadResp;
-    const externalUser = response.user;
-    const card = new UserCard();
-    const status = setStatusFunc(externalUser.isLogined);
-    card.setStatus(status);
-    card.setName(externalUser.login);
-    this.usersList.append(card);
-  };
+    const currentComps: UserCard[] = [];
+    array.forEach((user: IUser) => {
+      if (sessionStorage.getItem('Name') !== user.login) {
+        const card = new UserCard();
+        const status = setStatusFunc(user.isLogined);
+        card.setStatus(status);
+        card.setName(user.login);
+        currentComps.push(card);
+        this.usersList.append(card);
+      }
+    });
+    this.prevComponent = currentComps;
+  }
 }

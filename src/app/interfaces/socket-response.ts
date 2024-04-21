@@ -4,6 +4,11 @@
 //   payload: object | null;
 // }
 
+export interface IUser {
+  login: string;
+  isLogined: boolean;
+}
+
 export interface IUserPayloadResp {
   user: {
     login: string;

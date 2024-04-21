@@ -3,6 +3,7 @@ import { Footer } from './footer/footer';
 import { Header } from './header/header';
 import './chat.css';
 import { UsersList } from '../list-of-users/users-list';
+import { socketService } from '../../services/websocket-service';
 
 export class Chat extends Component {
   private header = new Header();
@@ -16,8 +17,12 @@ export class Chat extends Component {
   constructor() {
     super({ tag: 'div', className: 'chat__wrapper wrapper' });
     const chatContainer = new Component({ className: 'chat__container' });
+    const mainContainer = new Component({ className: 'chat__main-container' });
+    socketService.getAllAuthUsers();
+    socketService.getAllUnauthUsers();
     this.userListContainer.append(this.usersList);
-    chatContainer.appendChildren([this.header, this.userListContainer, this.footer]);
+    mainContainer.appendChildren([this.userListContainer]);
+    chatContainer.appendChildren([this.header, mainContainer, this.footer]);
     this.append(chatContainer);
   }
 }

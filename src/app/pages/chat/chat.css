@@ -1,14 +1,29 @@
 .container {
   display: flex;
-  width: 100%;
   padding: 7px;
   justify-content: space-between;
+  align-items: center;
   background-color: #e2ecffb8;
   border-radius: 15px;
 }
 
 .chat__container {
   display: flex;
+  width: 100%;
+  height: 100%;
   gap: 10px;
   flex-direction: column;
+}
+
+.chat__user-list-container {
+  overflow: scroll;
+  background-color: #e2ecffb8;
+  border-radius: 15px;
+  height: 70svh;
+  padding: 0.5%;
+  width: 35%;
+}
+
+.chat__main-container {
+  margin: 0 1rem;
 }

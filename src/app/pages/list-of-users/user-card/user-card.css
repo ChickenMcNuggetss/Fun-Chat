@@ -1,4 +1,17 @@
 .user-card__wrapper {
   display: flex;
-  height: 2svh;
+  border-left: 1px solid #6f7c94b8;
+}
+
+.user-card__status {
+  margin: auto 5px;
+}
+
+@media (hover: hover) {
+  .user-card__wrapper:hover {
+    color: rgb(78, 110, 137);
+    border-color: rgb(78, 110, 137);
+    transition: 0.4s;
+    cursor: pointer;
+  }
 }

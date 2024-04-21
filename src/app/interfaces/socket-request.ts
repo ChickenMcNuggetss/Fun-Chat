@@ -1,4 +1,4 @@
-export interface IUser {
+export interface IUserRequest {
   user: {
     login: string;
     password: string;

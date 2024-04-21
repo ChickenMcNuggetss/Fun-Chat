@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 import { WsMessage } from '../enums/ws-message';
-import { IUser } from '../interfaces/socket-request';
+import { IUserRequest } from '../interfaces/socket-request';
 import { Responses } from '../interfaces/socket-response';
+import { Observable } from '../utilities/observable';
 import { EventEmitter } from './event-emitter';
-// import { Responses } from '../interfaces/socket-response';
 
 const URL = 'ws://127.0.0.1:4000/';
 
@@ -11,12 +11,10 @@ function serializeData<T>(type: WsMessage, payload: T) {
   return JSON.stringify({ id: '', type, payload });
 }
 
-// function parseData<S>() {
-//   return
-// }
-
 export class SocketService extends EventEmitter<Responses> {
   private socket: WebSocket;
+
+  private messageObserver = new Observable<string>('');
 
   constructor() {
     super();
@@ -24,6 +22,18 @@ export class SocketService extends EventEmitter<Responses> {
 
     this.socket.addEventListener('open', (event: Event) => {
       console.log(event, 'Success');
+      console.log(window.location.hash);
+      if (sessionStorage.getItem('reloaded') && window.location.hash === '#chat') {
+        const name = sessionStorage.getItem('Name');
+        const password = sessionStorage.getItem('Password');
+        if (name && password) {
+          this.authenticateUser(name, password);
+        }
+        this.getAllAuthUsers();
+        this.getAllUnauthUsers();
+      } else {
+        sessionStorage.setItem('reloaded', 'true');
+      }
     });
 
     this.socket.addEventListener('message', (event: MessageEvent<string>) => {
@@ -32,17 +42,17 @@ export class SocketService extends EventEmitter<Responses> {
       this.emitEvent(data.type, data.payload);
     });
 
-    this.socket.addEventListener('error', (event: Event) => {
+    this.socket.addEventListener('close', (event: Event) => {
       console.log(event, event.type);
     });
 
-    // this.socket.addEventListener('close', (event: Event) => {
-    //   console.log(event);
-    // });
+    this.socket.addEventListener('error', (event: Event) => {
+      console.log(event, event.type);
+    });
   }
 
   public authenticateUser(login: string, password: string) {
-    const data = serializeData<IUser>(WsMessage.USER_LOGIN, {
+    const data = serializeData<IUserRequest>(WsMessage.USER_LOGIN, {
       user: {
         login,
         password,
@@ -54,13 +64,12 @@ export class SocketService extends EventEmitter<Responses> {
   }
 
   public sendLogoutRequest(login: string, password: string) {
-    const data = serializeData<IUser>(WsMessage.USER_LOGOUT, {
+    const data = serializeData<IUserRequest>(WsMessage.USER_LOGOUT, {
       user: {
         login,
         password,
       },
     });
-    // console.log(data, 'logout');
     this.socket.send(data);
   }
 
@@ -74,7 +83,7 @@ export class SocketService extends EventEmitter<Responses> {
   public getAllUnauthUsers() {
     const data = serializeData<null>(WsMessage.USER_INACTIVE, null);
     if (this.socket.readyState === 1) {
-      this.socket.send(data);
+      this.socket.send(JSON.parse(data));
     }
   }
 }

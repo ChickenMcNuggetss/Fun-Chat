@@ -1,3 +1,7 @@
+.footer {
+  margin: 0 1rem 1rem;
+}
+
 .footer__link {
   text-decoration: none;
   color: #2f3642;

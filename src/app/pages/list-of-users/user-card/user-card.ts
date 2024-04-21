@@ -1,4 +1,5 @@
 import { Component } from '../../../components/base-component';
+import './user-card.css';
 
 export class UserCard extends Component {
   private status = new Component({
