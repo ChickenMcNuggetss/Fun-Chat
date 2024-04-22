@@ -16,7 +16,7 @@ export class SocketService extends EventEmitter<Responses> {
     super();
     this.socket = new WebSocket(URL);
 
-    this.socket.addEventListener('open', (event: Event) => {
+    this.socket.addEventListener('open', () => {
       if (sessionStorage.getItem('reloaded') && window.location.hash === '#chat') {
         const name = sessionStorage.getItem('Name');
         const password = sessionStorage.getItem('Password');
