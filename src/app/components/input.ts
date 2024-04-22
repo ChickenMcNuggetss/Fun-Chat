@@ -80,4 +80,8 @@ export class Input extends Component<HTMLInputElement> {
     this.node.reportValidity();
     return isInputValid;
   }
+
+  getValue() {
+    return this.node.value;
+  }
 }

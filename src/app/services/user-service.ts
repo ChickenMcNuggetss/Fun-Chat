@@ -17,12 +17,10 @@ class UserService {
 
   // eslint-disable-next-line class-methods-use-this
   public authenticateUser(name: string, password: string) {
+    this.isLogined.notify('true');
     sessionStorage.setItem('Name', `${name}`);
     sessionStorage.setItem('Password', `${password}`);
-    socketService.authenticateUser(
-      JSON.stringify(sessionStorage.getItem('Name')),
-      JSON.stringify(sessionStorage.getItem('Password'))
-    );
+    socketService.authenticateUser(name, password);
   }
 
   loadUsers = (data: Responses) => {
@@ -65,6 +63,9 @@ class UserService {
   }
 
   userFilter(name: string) {
+    if (name === '') {
+      return this.usersList.getValue();
+    }
     return this.usersList.getValue().filter((user) => {
       return user.login === name;
     });

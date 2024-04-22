@@ -1,5 +1,6 @@
 import { Component } from './components/base-component';
-import { userService } from './services/user-service';
+// import { userService } from './services/user-service';
+// .name !== 'chat' || userService.getUserStatus().getValue() === 'true'
 
 export interface Route {
   name: string;
@@ -49,7 +50,7 @@ export class Router {
   initHash() {
     const route = this.routes.find((unit) => unit.name === window.location.hash.slice(1));
     if (route) {
-      if (route.name !== 'chat' || userService.getUserStatus().getValue() === 'true') {
+      if (route) {
         this.loadSelectedHash(route);
       }
     } else if (this.defaultComponent) {

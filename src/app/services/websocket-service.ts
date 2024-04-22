@@ -2,7 +2,6 @@
 import { WsMessage } from '../enums/ws-message';
 import { IUserRequest } from '../interfaces/socket-request';
 import { Responses } from '../interfaces/socket-response';
-import { Observable } from '../utilities/observable';
 import { EventEmitter } from './event-emitter';
 
 const URL = 'ws://127.0.0.1:4000/';
@@ -13,8 +12,6 @@ function serializeData<T>(type: WsMessage, payload: T) {
 
 export class SocketService extends EventEmitter<Responses> {
   private socket: WebSocket;
-
-  private messageObserver = new Observable<string>('');
 
   constructor() {
     super();
@@ -39,7 +36,6 @@ export class SocketService extends EventEmitter<Responses> {
     this.socket.addEventListener('message', (event: MessageEvent<string>) => {
       const data = JSON.parse(event.data);
       console.log(data.payload);
-      console.log(data.payload.error);
       this.emitEvent(data.type, data.payload);
     });
 

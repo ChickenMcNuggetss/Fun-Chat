@@ -24,6 +24,10 @@ export class UsersList extends Component {
     const inputContainer = new Component({ className: 'users-list__input-container' });
     inputContainer.append(this.search);
     this.appendChildren([inputContainer, this.usersList]);
+    this.search.addListener('input', () => {
+      const user = userService.userFilter(this.search.getValue());
+      this.addUsers(user);
+    });
     const userListObservable = userService.getUsersList();
     userListObservable.subscribe((users) => {
       this.addUsers(users);
@@ -36,11 +40,9 @@ export class UsersList extends Component {
     });
     const currentComps: UserCard[] = [];
     const name = sessionStorage.getItem('Name');
-    console.log(JSON.parse(JSON.stringify(name)));
     array.forEach((user: IUser) => {
       if (name) {
         if (name !== user.login) {
-          console.log(user);
           const card = new UserCard();
           const status = setStatusFunc(user.isLogined);
           card.setStatus(status);
