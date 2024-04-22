@@ -15,7 +15,6 @@ class UserService {
     socketService.subscribeListener(WsMessage.USER_EXTERNAL_LOGOUT, this.loadExternalUsers);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   public authenticateUser(name: string, password: string) {
     this.isLogined.notify('true');
     sessionStorage.setItem('Name', `${name}`);

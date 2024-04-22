@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import { WsMessage } from '../enums/ws-message';
 import { IUserRequest } from '../interfaces/socket-request';
 import { Responses } from '../interfaces/socket-response';
@@ -18,8 +17,6 @@ export class SocketService extends EventEmitter<Responses> {
     this.socket = new WebSocket(URL);
 
     this.socket.addEventListener('open', (event: Event) => {
-      console.log(event, 'Success');
-      console.log(window.location.hash);
       if (sessionStorage.getItem('reloaded') && window.location.hash === '#chat') {
         const name = sessionStorage.getItem('Name');
         const password = sessionStorage.getItem('Password');
@@ -35,16 +32,7 @@ export class SocketService extends EventEmitter<Responses> {
 
     this.socket.addEventListener('message', (event: MessageEvent<string>) => {
       const data = JSON.parse(event.data);
-      console.log(data.payload);
       this.emitEvent(data.type, data.payload);
-    });
-
-    this.socket.addEventListener('close', (event: Event) => {
-      console.log(event, event.type);
-    });
-
-    this.socket.addEventListener('error', (event: Event) => {
-      console.log(event.type);
     });
   }
 
