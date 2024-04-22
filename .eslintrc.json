@@ -21,9 +21,7 @@
     "browser": true,
     "node": true
   },
-  "linterOptions": {
-    "noInlineConfig": true
-  },
+  "noInlineConfig": true,
   "rules": {
     "import/prefer-default-export": "off"
   }
