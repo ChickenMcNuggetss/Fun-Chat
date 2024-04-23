@@ -8,6 +8,8 @@ class UserService {
 
   private isLogined = new Observable<string>('false');
 
+  private userData = new Observable<[name: string, status: string]>(['', '']);
+
   constructor() {
     socketService.subscribeListener(WsMessage.USER_ACTIVE, this.loadUsers);
     socketService.subscribeListener(WsMessage.USER_INACTIVE, this.loadUsers);
@@ -59,6 +61,10 @@ class UserService {
 
   getUserStatus() {
     return this.isLogined;
+  }
+
+  getUserData() {
+    return this.userData;
   }
 
   userFilter(name: string) {

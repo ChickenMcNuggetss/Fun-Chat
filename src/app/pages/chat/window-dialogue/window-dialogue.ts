@@ -1,6 +1,7 @@
 import { Component } from '../../../components/base-component';
 import { MessageForm } from './message-form/message-form';
 import { DialogueTitle } from './dialogue-title/dialogue-title';
+import './window-dialogue.css';
 
 export class WindowDialogue extends Component {
   private messageForm = new MessageForm();

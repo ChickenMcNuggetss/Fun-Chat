@@ -2,6 +2,7 @@ import { Component } from '../../components/base-component';
 import { Input } from '../../components/input';
 import { IUser } from '../../interfaces/socket-response';
 import { userService } from '../../services/user-service';
+import { Observable } from '../../utilities/observable';
 import { UserCard } from './user-card/user-card';
 import './users-list.css';
 
@@ -45,6 +46,9 @@ export class UsersList extends Component {
         if (name !== user.login) {
           const card = new UserCard();
           const status = setStatusFunc(user.isLogined);
+          card.addListener('click', () => {
+            userService.getUserData().notify([user.login, status]);
+          });
           card.setStatus(status);
           card.setName(user.login);
           currentComps.push(card);

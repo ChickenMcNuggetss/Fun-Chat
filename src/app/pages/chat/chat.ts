@@ -4,6 +4,7 @@ import { Header } from './header/header';
 import './chat.css';
 import { UsersList } from '../list-of-users/users-list';
 import { socketService } from '../../services/websocket-service';
+import { WindowDialogue } from './window-dialogue/window-dialogue';
 
 export class Chat extends Component {
   private header = new Header();
@@ -11,6 +12,8 @@ export class Chat extends Component {
   private userListContainer = new Component({ tag: 'div', className: 'chat__user-list-container' });
 
   private usersList = new UsersList();
+
+  private chat = new WindowDialogue();
 
   private footer = new Footer();
 
@@ -21,7 +24,7 @@ export class Chat extends Component {
     socketService.getAllAuthUsers();
     socketService.getAllUnauthUsers();
     this.userListContainer.append(this.usersList);
-    mainContainer.appendChildren([this.userListContainer]);
+    mainContainer.appendChildren([this.userListContainer, this.chat]);
     chatContainer.appendChildren([this.header, mainContainer, this.footer]);
     this.append(chatContainer);
   }

@@ -20,10 +20,12 @@
   background-color: #e2ecffb8;
   border-radius: 15px;
   height: 70svh;
-  padding: 0.5%;
+  padding: 1%;
   width: 35%;
 }
 
 .chat__main-container {
+  display: flex;
+  gap: 0.6rem;
   margin: 0 1rem;
 }

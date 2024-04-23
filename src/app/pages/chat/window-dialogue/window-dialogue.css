@@ -1,0 +1,11 @@
+.window-dialogue__wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 0.7rem;
+  background-color: #e2ecffb8;
+  border-radius: 15px;
+  height: 70svh;
+  padding: 1%;
+  width: 64%;
+}
