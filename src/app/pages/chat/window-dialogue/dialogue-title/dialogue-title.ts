@@ -3,9 +3,15 @@ import { userService } from '../../../../services/user-service';
 import './dialogue-title.css';
 
 export class DialogueTitle extends Component {
-  private name = new Component({ className: 'title__name', text: '' });
+  private name = new Component({
+    className: 'title__name',
+    text: sessionStorage.getItem('loginDialogue') || '',
+  });
 
-  private status = new Component({ className: 'title__status', text: '' });
+  private status = new Component({
+    className: 'title__status',
+    text: sessionStorage.getItem('statusDialogue') || '',
+  });
 
   constructor() {
     super({ tag: 'div', className: 'dialogue-title__wrapper' });

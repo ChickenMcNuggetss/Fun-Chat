@@ -48,6 +48,8 @@ export class UsersList extends Component {
           const status = setStatusFunc(user.isLogined);
           card.addListener('click', () => {
             userService.getUserData().notify([user.login, status]);
+            sessionStorage.setItem('loginDialogue', `${user.login}`);
+            sessionStorage.setItem('statusDialogue', `${status}`);
           });
           card.setStatus(status);
           card.setName(user.login);
