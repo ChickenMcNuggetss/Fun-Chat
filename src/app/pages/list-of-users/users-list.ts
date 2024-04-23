@@ -2,7 +2,6 @@ import { Component } from '../../components/base-component';
 import { Input } from '../../components/input';
 import { IUser } from '../../interfaces/socket-response';
 import { userService } from '../../services/user-service';
-import { Observable } from '../../utilities/observable';
 import { UserCard } from './user-card/user-card';
 import './users-list.css';
 

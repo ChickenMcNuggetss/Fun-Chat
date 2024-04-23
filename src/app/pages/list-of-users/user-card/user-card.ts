@@ -1,5 +1,4 @@
 import { Component } from '../../../components/base-component';
-import { Observable } from '../../../utilities/observable';
 import './user-card.css';
 
 export class UserCard extends Component {
