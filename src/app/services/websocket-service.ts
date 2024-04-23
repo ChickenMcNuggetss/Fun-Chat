@@ -1,5 +1,5 @@
 import { WsMessage } from '../enums/ws-message';
-import { IUserRequest } from '../interfaces/socket-request';
+import { IMessage, IUserRequest } from '../interfaces/socket-request';
 import { Responses } from '../interfaces/socket-response';
 import { EventEmitter } from './event-emitter';
 
@@ -67,6 +67,18 @@ export class SocketService extends EventEmitter<Responses> {
 
   public getAllUnauthUsers() {
     const data = serializeData<null>(WsMessage.USER_INACTIVE, null);
+    if (this.socket.readyState === 1) {
+      this.socket.send(data);
+    }
+  }
+
+  public sendMessage(to: string, text: string) {
+    const data = serializeData<IMessage>(WsMessage.MSG_SEND, {
+      message: {
+        to,
+        text,
+      },
+    });
     if (this.socket.readyState === 1) {
       this.socket.send(data);
     }
