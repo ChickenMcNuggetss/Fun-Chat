@@ -35,13 +35,13 @@ export class SocketService extends EventEmitter<Responses> {
       this.emitEvent(data.type, data.payload);
     });
 
-    this.socket.addEventListener('close', (event: Event) => {
-      console.log(event, event.type);
-    });
+    // this.socket.addEventListener('close', (event: Event) => {
+    //   console.log(event, event.type);
+    // });
 
-    this.socket.addEventListener('error', (event: Event) => {
-      console.log(event.type);
-    });
+    // this.socket.addEventListener('error', (event: Event) => {
+    //   console.log(event.type);
+    // });
   }
 
   public authenticateUser(login: string, password: string) {
