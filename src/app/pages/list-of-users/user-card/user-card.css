@@ -1,5 +1,7 @@
 .user-card__wrapper {
   display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
   border-left: 1px solid #6f7c94b8;
 }
 

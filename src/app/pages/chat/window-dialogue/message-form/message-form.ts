@@ -27,6 +27,7 @@ export class MessageForm extends Component {
       const login = sessionStorage.getItem('loginDialogue');
       if (login) {
         socketService.sendMessage(login, this.inputText.getValue());
+        this.inputText.clearValue();
       }
       this.inputText.clearValue();
     });

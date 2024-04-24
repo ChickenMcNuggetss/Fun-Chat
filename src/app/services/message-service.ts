@@ -24,6 +24,7 @@ class MessageService {
 
   receiveMessages = (data: Responses) => {
     const messages = data as IRespMessageHistory;
+    this.messages.notify([]);
     messages.messages.forEach((el: IMessage) => {
       this.messages.notify((prev) => [...prev, el]);
     });
