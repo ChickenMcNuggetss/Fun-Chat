@@ -1,5 +1,5 @@
 import { Component } from '../../../../components/base-component';
-import { IRespMessage } from '../../../../interfaces/socket-response';
+import { IMessage } from '../../../../interfaces/socket-response';
 import { messageService } from '../../../../services/message-service';
 import { MessageCard } from '../message-card/message-card';
 import './dialogue-history.css';
@@ -14,24 +14,31 @@ export class DialogueHistory extends Component {
     });
   }
 
-  addMessages(data: IRespMessage[]) {
+  addMessages(data: IMessage[]) {
     this.prevComponent?.forEach((el) => {
       el.removeNode();
     });
     const currentComps: MessageCard[] = [];
-    data.forEach((message) => {
-      const card = new MessageCard();
-      const time = new Date(message.message.datetime).toLocaleString();
-      card.getTime().setTextContent(time);
-      card.getSenderUsername().setTextContent(message.message.from);
-      card.getMessage().setTextContent(message.message.text);
-      if (message.message.from === sessionStorage.getItem('Name')) {
-        card.addClass('sended-message');
-      } else {
-        card.addClass('received-message');
+    const loginDialogue = sessionStorage.getItem('loginDialogue');
+    const currentUser = sessionStorage.getItem('Name');
+    data.forEach((message: IMessage) => {
+      if (
+        (loginDialogue === message.to && currentUser === message.from) ||
+        (loginDialogue === message.from && currentUser === message.to)
+      ) {
+        const card = new MessageCard();
+        const time = new Date(message.datetime).toLocaleString();
+        card.getTime().setTextContent(time);
+        card.getSenderUsername().setTextContent(message.from);
+        card.getMessage().setTextContent(message.text);
+        if (message.from === sessionStorage.getItem('Name')) {
+          card.addClass('sended-message');
+        } else {
+          card.addClass('received-message');
+        }
+        currentComps.push(card);
+        this.append(card);
       }
-      currentComps.push(card);
-      this.append(card);
     });
     this.prevComponent = currentComps;
   }

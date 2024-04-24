@@ -9,6 +9,19 @@ export interface IUser {
   isLogined: boolean;
 }
 
+export interface IMessage {
+  id: string;
+  from: string;
+  to: string;
+  text: string;
+  datetime: number;
+  status: {
+    isDelivered: boolean;
+    isReaded: boolean;
+    isEdited: boolean;
+  };
+}
+
 export interface IUserPayloadResp {
   user: {
     login: string;
@@ -35,4 +48,8 @@ export interface IRespMessage {
   };
 }
 
-export type Responses = IUserPayloadResp | IAllUsers | IRespMessage;
+export interface IRespMessageHistory {
+  messages: [];
+}
+
+export type Responses = IUserPayloadResp | IAllUsers | IRespMessage | IRespMessageHistory;

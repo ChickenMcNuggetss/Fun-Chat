@@ -2,17 +2,10 @@ import { Component } from '../../components/base-component';
 import { Input } from '../../components/input';
 import { IUser } from '../../interfaces/socket-response';
 import { userService } from '../../services/user-service';
+import { socketService } from '../../services/websocket-service';
 import { setStatusFunc } from '../../utilities/status';
-// import { Observable } from '../../utilities/observable';
 import { UserCard } from './user-card/user-card';
 import './users-list.css';
-
-// function notifyList(
-//   list: Observable<[name: string, status: string]>,
-//   data: [name: string, status: string]
-// ) {
-//   list.notify(data);
-// }
 
 export class UsersList extends Component {
   private usersList: Component;
@@ -53,6 +46,7 @@ export class UsersList extends Component {
             sessionStorage.setItem('loginDialogue', `${user.login}`);
             sessionStorage.setItem('statusDialogue', `${status}`);
             userService.getUserData().notify([user.login, status]);
+            socketService.fetchMessageHistory(user.login);
           });
           card.setStatus(status);
           card.setName(user.login);

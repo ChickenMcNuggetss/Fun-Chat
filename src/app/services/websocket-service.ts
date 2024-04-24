@@ -1,5 +1,5 @@
 import { WsMessage } from '../enums/ws-message';
-import { IMessage, IUserRequest } from '../interfaces/socket-request';
+import { IMessageSended, IMessageHistory, IUserRequest } from '../interfaces/socket-request';
 import { Responses } from '../interfaces/socket-response';
 import { EventEmitter } from './event-emitter';
 
@@ -25,6 +25,10 @@ export class SocketService extends EventEmitter<Responses> {
         }
         this.getAllAuthUsers();
         this.getAllUnauthUsers();
+        const partner = sessionStorage.getItem('loginDialogue');
+        if (partner) {
+          this.fetchMessageHistory(partner);
+        }
       }
     });
 
@@ -71,10 +75,21 @@ export class SocketService extends EventEmitter<Responses> {
   }
 
   public sendMessage(to: string, text: string) {
-    const data = serializeData<IMessage>(WsMessage.MSG_SEND, {
+    const data = serializeData<IMessageSended>(WsMessage.MSG_SEND, {
       message: {
         to,
         text,
+      },
+    });
+    if (this.socket.readyState === 1) {
+      this.socket.send(data);
+    }
+  }
+
+  public fetchMessageHistory(login: string) {
+    const data = serializeData<IMessageHistory>(WsMessage.MSG_FROM_USER, {
+      user: {
+        login,
       },
     });
     if (this.socket.readyState === 1) {

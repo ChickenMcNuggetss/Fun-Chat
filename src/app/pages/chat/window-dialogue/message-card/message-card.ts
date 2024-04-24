@@ -6,8 +6,6 @@ export class MessageCard extends Component {
 
   private senderUsername = new Component({ className: 'message-card__sender' });
 
-  // private deliveryStatus = new Component({ className: 'message-card__status' });
-
   private messageContainer = new Component({ className: 'message-card__text' });
 
   private indicator = new Component({ className: 'message-card__edit-indicator' });

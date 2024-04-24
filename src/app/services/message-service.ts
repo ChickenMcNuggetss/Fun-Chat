@@ -1,19 +1,32 @@
 import { WsMessage } from '../enums/ws-message';
-import { IRespMessage, Responses } from '../interfaces/socket-response';
+import {
+  IMessage,
+  IRespMessage,
+  IRespMessageHistory,
+  Responses,
+} from '../interfaces/socket-response';
 import { Observable } from '../utilities/observable';
 import { socketService } from './websocket-service';
 
 class MessageService {
-  private messages = new Observable<IRespMessage[]>([]);
+  private messages = new Observable<IMessage[]>([]);
 
   constructor() {
     socketService.subscribeListener(WsMessage.MSG_SEND, this.receiveMessage);
+    socketService.subscribeListener(WsMessage.MSG_FROM_USER, this.receiveMessages);
   }
 
-  // eslint-disable-next-line class-methods-use-this
   receiveMessage = (data: Responses) => {
-    const message = data as IRespMessage;
+    const response = data as IRespMessage;
+    const message = response.message as IMessage;
     this.messages.notify((prev) => [...prev, message]);
+  };
+
+  receiveMessages = (data: Responses) => {
+    const messages = data as IRespMessageHistory;
+    messages.messages.forEach((el: IMessage) => {
+      this.messages.notify((prev) => [...prev, el]);
+    });
   };
 
   getMessage() {

@@ -12,9 +12,15 @@ export interface IExternalUserData {
   };
 }
 
-export interface IMessage {
+export interface IMessageSended {
   message: {
     to: string;
     text: string;
+  };
+}
+
+export interface IMessageHistory {
+  user: {
+    login: string;
   };
 }
