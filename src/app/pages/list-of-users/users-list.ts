@@ -2,13 +2,17 @@ import { Component } from '../../components/base-component';
 import { Input } from '../../components/input';
 import { IUser } from '../../interfaces/socket-response';
 import { userService } from '../../services/user-service';
+import { setStatusFunc } from '../../utilities/status';
+// import { Observable } from '../../utilities/observable';
 import { UserCard } from './user-card/user-card';
 import './users-list.css';
 
-export function setStatusFunc(status: boolean) {
-  if (status) return 'Active';
-  return 'Idle';
-}
+// function notifyList(
+//   list: Observable<[name: string, status: string]>,
+//   data: [name: string, status: string]
+// ) {
+//   list.notify(data);
+// }
 
 export class UsersList extends Component {
   private usersList: Component;

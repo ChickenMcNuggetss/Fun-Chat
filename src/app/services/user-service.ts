@@ -1,6 +1,6 @@
 import { WsMessage } from '../enums/ws-message';
 import { IAllUsers, IUser, IUserPayloadResp, Responses } from '../interfaces/socket-response';
-import { setStatusFunc } from '../pages/list-of-users/users-list';
+import { setStatusFunc } from '../utilities/status';
 import { Observable } from '../utilities/observable';
 import { socketService } from './websocket-service';
 
@@ -52,7 +52,7 @@ class UserService {
     if (sessionStorage.getItem('loginDialogue') === externalUser.login) {
       const status = setStatusFunc(externalUser.isLogined);
       sessionStorage.setItem('statusDialogue', status);
-      userService.getUserData().notify([externalUser.login, status]);
+      this.userData.notify([externalUser.login, status]);
     }
     this.usersList.notify([...list, externalUser]);
   };
