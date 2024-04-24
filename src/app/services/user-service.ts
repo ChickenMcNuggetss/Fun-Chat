@@ -1,5 +1,6 @@
 import { WsMessage } from '../enums/ws-message';
 import { IAllUsers, IUser, IUserPayloadResp, Responses } from '../interfaces/socket-response';
+import { setStatusFunc } from '../pages/list-of-users/users-list';
 import { Observable } from '../utilities/observable';
 import { socketService } from './websocket-service';
 
@@ -28,7 +29,9 @@ class UserService {
     const response = data as IAllUsers;
     if (response.users.length !== 0) {
       response.users.forEach((el: IUser) => {
-        this.usersList.notify((prev) => [...prev, el]);
+        if (!this.usersList.getValue().includes(el)) {
+          this.usersList.notify((prev) => [...prev, el]);
+        }
       });
     }
   };
@@ -46,14 +49,13 @@ class UserService {
         list.splice(i, 1);
       }
     });
+    if (sessionStorage.getItem('loginDialogue') === externalUser.login) {
+      const status = setStatusFunc(externalUser.isLogined);
+      sessionStorage.setItem('statusDialogue', status);
+      userService.getUserData().notify([externalUser.login, status]);
+    }
     this.usersList.notify([...list, externalUser]);
   };
-
-  public pushUserIntoList(user: IUser) {
-    if (sessionStorage.getItem('Name') !== user.login) {
-      this.usersList.notify((prev) => [...prev, user]);
-    }
-  }
 
   public getUsersList() {
     return this.usersList;

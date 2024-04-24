@@ -1,4 +1,17 @@
 .dialogue-history {
+  display: flex;
+  flex-direction: column;
   height: 100%;
   width: 100%;
+  overflow: scroll;
+}
+
+.received-message {
+  border-bottom-left-radius: 0;
+  align-self: flex-start;
+}
+
+.sended-message {
+  border-bottom-right-radius: 0;
+  align-self: flex-end;
 }

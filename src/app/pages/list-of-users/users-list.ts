@@ -5,7 +5,7 @@ import { userService } from '../../services/user-service';
 import { UserCard } from './user-card/user-card';
 import './users-list.css';
 
-function setStatusFunc(status: boolean) {
+export function setStatusFunc(status: boolean) {
   if (status) return 'Active';
   return 'Idle';
 }
@@ -46,9 +46,9 @@ export class UsersList extends Component {
           const card = new UserCard();
           const status = setStatusFunc(user.isLogined);
           card.addListener('click', () => {
-            userService.getUserData().notify([user.login, status]);
             sessionStorage.setItem('loginDialogue', `${user.login}`);
             sessionStorage.setItem('statusDialogue', `${status}`);
+            userService.getUserData().notify([user.login, status]);
           });
           card.setStatus(status);
           card.setName(user.login);

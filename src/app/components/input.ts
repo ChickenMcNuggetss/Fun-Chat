@@ -84,4 +84,8 @@ export class Input extends Component<HTMLInputElement> {
   getValue() {
     return this.node.value;
   }
+
+  clearValue() {
+    this.node.value = '';
+  }
 }

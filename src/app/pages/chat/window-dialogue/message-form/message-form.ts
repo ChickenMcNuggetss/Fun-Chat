@@ -1,6 +1,7 @@
 import { Component } from '../../../../components/base-component';
 import { Button } from '../../../../components/button';
 import { Input } from '../../../../components/input';
+import { socketService } from '../../../../services/websocket-service';
 import './message-form.css';
 
 export class MessageForm extends Component {
@@ -21,6 +22,13 @@ export class MessageForm extends Component {
       if (this.inputText.getValue() === '') {
         this.button.setDisabledState(true);
       }
+    });
+    this.button.addListener('click', () => {
+      const login = sessionStorage.getItem('loginDialogue');
+      if (login) {
+        socketService.sendMessage(login, this.inputText.getValue());
+      }
+      this.inputText.clearValue();
     });
     this.append(messageForm);
   }

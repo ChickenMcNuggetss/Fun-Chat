@@ -17,7 +17,7 @@ export class SocketService extends EventEmitter<Responses> {
     this.socket = new WebSocket(URL);
 
     this.socket.addEventListener('open', () => {
-      if (sessionStorage.getItem('reloaded') && window.location.hash === '#chat') {
+      if (window.location.hash === '#chat') {
         const name = sessionStorage.getItem('Name');
         const password = sessionStorage.getItem('Password');
         if (name && password) {
@@ -25,8 +25,6 @@ export class SocketService extends EventEmitter<Responses> {
         }
         this.getAllAuthUsers();
         this.getAllUnauthUsers();
-      } else {
-        sessionStorage.setItem('reloaded', 'true');
       }
     });
 
