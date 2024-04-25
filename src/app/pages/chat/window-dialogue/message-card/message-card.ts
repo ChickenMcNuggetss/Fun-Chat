@@ -6,30 +6,38 @@ export class MessageCard extends Component {
 
   private senderUsername = new Component({ className: 'message-card__sender' });
 
+  private status = new Component({ className: 'message-card__status' });
+
   private messageContainer = new Component({ className: 'message-card__text' });
 
   private indicator = new Component({ className: 'message-card__edit-indicator' });
 
   constructor() {
     super({ className: 'message-card__wrapper' });
-    const container = new Component({ className: 'message-card__info-container' });
+    const container = new Component({ className: 'message-card__container' });
     container.appendChildren([this.senderUsername, this.time]);
-    this.appendChildren([container, this.messageContainer, this.indicator]);
+    const statusContainer = new Component({ className: 'message-card__container' });
+    statusContainer.appendChildren([this.status, this.indicator]);
+    this.appendChildren([container, this.messageContainer, statusContainer]);
   }
 
-  getTime() {
-    return this.time;
+  setTime(time: string) {
+    this.time.setTextContent(time);
   }
 
-  getSenderUsername() {
-    return this.senderUsername;
+  setSenderUsername(username: string) {
+    this.senderUsername.setTextContent(username);
   }
 
-  getMessage() {
-    return this.messageContainer;
+  setMessage(text: string) {
+    this.messageContainer.setTextContent(text);
   }
 
-  getIndicator() {
-    return this.indicator;
+  setIndicator(indicator: string) {
+    this.indicator.setTextContent(indicator);
+  }
+
+  setStatus(status: string) {
+    this.status.setTextContent(status);
   }
 }

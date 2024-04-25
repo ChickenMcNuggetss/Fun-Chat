@@ -61,11 +61,11 @@ class UserService {
     return this.usersList;
   }
 
-  getUserStatus() {
+  public getUserStatus() {
     return this.isLogined;
   }
 
-  getUserData() {
+  public getUserData() {
     return this.userData;
   }
 

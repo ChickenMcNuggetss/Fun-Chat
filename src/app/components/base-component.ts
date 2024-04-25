@@ -79,4 +79,8 @@ export class Component<T extends HTMLElement = HTMLElement> {
   addListener(event: string, listener: EventListener, options = false) {
     this.node.addEventListener(event, listener, options);
   }
+
+  scrollIntoView() {
+    this.node.scrollIntoView({ block: 'end' });
+  }
 }

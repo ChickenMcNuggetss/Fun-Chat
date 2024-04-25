@@ -13,7 +13,7 @@ export class About extends Component {
     const about = new Component({ className: 'about_text', text: DESCRIPTION });
     const title = new Component({ tag: 'h1', className: 'title', text: 'Fun Chat' });
     const container = new Component({ className: 'about__container box' });
-    const link = new Link();
+    const link = new Link('https://github.com/ChickenMcNuggetss', 'ChickenMcNuggetss');
     container.appendChildren([title, about, button, link]);
     this.append(container);
   }

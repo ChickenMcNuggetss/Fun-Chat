@@ -28,11 +28,14 @@ export class DialogueHistory extends Component {
       ) {
         const card = new MessageCard();
         const time = new Date(message.datetime).toLocaleString();
-        card.getTime().setTextContent(time);
-        card.getSenderUsername().setTextContent(message.from);
-        card.getMessage().setTextContent(message.text);
+        card.setTime(time);
+        card.setSenderUsername(message.from);
+        card.setMessage(message.text);
         if (message.from === sessionStorage.getItem('Name')) {
           card.addClass('sended-message');
+          if (message.status.isDelivered) {
+            card.setStatus('delivered');
+          }
         } else {
           card.addClass('received-message');
         }
@@ -40,6 +43,7 @@ export class DialogueHistory extends Component {
         this.append(card);
       }
     });
+    currentComps.at(-1)?.scrollIntoView();
     this.prevComponent = currentComps;
   }
 }

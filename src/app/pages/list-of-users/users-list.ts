@@ -12,17 +12,16 @@ export class UsersList extends Component {
 
   private prevComponent: UserCard[] | null = null;
 
-  private search = new Input({ className: 'users-list__search' });
-
   constructor() {
     super({ tag: 'div', className: 'users-list__wrapper' });
+    const search = new Input({ className: 'users-list__search' });
     const usersList = new Component({ tag: 'div', className: 'users-list' });
     this.usersList = usersList;
     const inputContainer = new Component({ className: 'users-list__input-container' });
-    inputContainer.append(this.search);
+    inputContainer.append(search);
     this.appendChildren([inputContainer, this.usersList]);
-    this.search.addListener('input', () => {
-      const user = userService.userFilter(this.search.getValue());
+    search.addListener('input', () => {
+      const user = userService.userFilter(search.getValue());
       this.addUsers(user);
     });
     const userListObservable = userService.getUsersList();

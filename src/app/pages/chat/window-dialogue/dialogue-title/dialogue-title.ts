@@ -3,22 +3,20 @@ import { userService } from '../../../../services/user-service';
 import './dialogue-title.css';
 
 export class DialogueTitle extends Component {
-  private name = new Component({
-    className: 'title__name',
-    text: sessionStorage.getItem('loginDialogue') || '',
-  });
-
-  private status = new Component({
-    className: 'title__status',
-    text: sessionStorage.getItem('statusDialogue') || '',
-  });
-
   constructor() {
     super({ tag: 'div', className: 'dialogue-title__wrapper' });
-    userService.getUserData().subscribe((data) => {
-      this.name.setTextContent(data[0]);
-      this.status.setTextContent(data[1]);
+    const name = new Component({
+      className: 'title__name',
+      text: sessionStorage.getItem('loginDialogue') || '',
     });
-    this.appendChildren([this.name, this.status]);
+    const status = new Component({
+      className: 'title__status',
+      text: sessionStorage.getItem('statusDialogue') || '',
+    });
+    userService.getUserData().subscribe((data) => {
+      name.setTextContent(data[0]);
+      status.setTextContent(data[1]);
+    });
+    this.appendChildren([name, status]);
   }
 }
