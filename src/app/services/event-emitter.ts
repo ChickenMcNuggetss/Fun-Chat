@@ -26,4 +26,4 @@ export class EventEmitter<K> {
   }
 }
 
-export const authEmitter = new EventEmitter();
+export const authEmitter: EventEmitter<Event> = new EventEmitter();

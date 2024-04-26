@@ -17,8 +17,7 @@ export class Button extends Component<HTMLButtonElement> {
     }
 
     if (onClick) {
-      this.node.onclick = onClick;
-      this.node.addEventListener('click', this.node.onclick);
+      this.node.addEventListener('click', onClick);
     }
   }
 

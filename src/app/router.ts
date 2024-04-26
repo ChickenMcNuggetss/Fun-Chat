@@ -1,6 +1,4 @@
 import { Component } from './components/base-component';
-// import { userService } from './services/user-service';
-// .name !== 'chat' || userService.getUserStatus().getValue() === 'true'
 
 export interface Route {
   name: string;
