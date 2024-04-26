@@ -31,7 +31,7 @@ export class DialogueHistory extends Component {
         card.setTime(time);
         card.setSenderUsername(message.from);
         card.setMessage(message.text);
-        if (message.from === sessionStorage.getItem('Name')) {
+        if (message.from === currentUser) {
           card.addClass('sended-message');
           if (message.status.isDelivered) {
             card.setStatus('delivered');
