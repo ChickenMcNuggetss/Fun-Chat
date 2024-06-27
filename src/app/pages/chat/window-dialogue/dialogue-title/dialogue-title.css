@@ -1,0 +1,5 @@
+.dialogue-title__wrapper {
+  display: flex;
+  justify-content: space-between;
+  height: 4svh;
+}

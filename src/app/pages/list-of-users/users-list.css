@@ -1,0 +1,30 @@
+.users-list__wrapper {
+  display: flex;
+  position: relative;
+  flex-direction: column;
+}
+
+.users-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  overflow: scroll;
+  padding: 10px;
+}
+
+.users-list__search {
+  width: 96%;
+  background-color: #e2ecffb8;
+  border: none;
+  color: #2f3642;
+  margin-left: 3px;
+  border-radius: 4px;
+  margin-bottom: 3px;
+}
+
+.users-list__input-container {
+  position: sticky;
+  top: 0;
+  background-color: #e2ecff;
+  border-radius: 10px;
+}

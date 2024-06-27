@@ -1,0 +1,14 @@
+.message-form {
+  width: 100%;
+  display: flex;
+  gap: 0.5rem;
+  justify-content: space-between;
+}
+
+.message-form__input {
+  width: 100%;
+  border: none;
+  background-color: #e2ecffb8;
+  color: #2f3642;
+  border-radius: 10px;
+}
